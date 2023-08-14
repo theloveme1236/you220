@@ -4,6 +4,7 @@ os.system('sudo apt update -y')
 os.system('! sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb')
 os.system('! sudo apt install ./google-chrome-stable_current_amd64.deb')
 os.system('! sudo pip install selenium')
+os.system('! sudo pip install seleniumbase')
 os.system('! sudo pip install pymongo')
 os.system('! sudo pip install webdriver-manager')
 import subprocess
