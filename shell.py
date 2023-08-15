@@ -1,8 +1,4 @@
 import os
-
-os.system('pip install selenium')
-os.system('pip install seleniumbase')
-os.system('pip install pymongo')
 import subprocess
 import time
 from selenium.webdriver.common.keys import Keys
@@ -14,16 +10,21 @@ import pickle
 from datetime import datetime, timedelta
 import base64
 from selenium.webdriver.common.action_chains import ActionChains
-
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoSuchWindowException
 import sys
 import random
-from seleniumbase import Driver
+from selenium.webdriver.chrome.options import Options
+
 cluster = MongoClient('mongodb+srv://theloveme1238:zx5LtPcgLpcpIh7D@cluster0.pzuhxov.mongodb.net/?retryWrites=true&w=majority')
 db = cluster["my_database"]
 collection = db["users"]        
-driver = Driver(uc=True)
+options = Options()
+        #options.headless = True
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
+
+driver = webdriver.Chrome(options=options)
 driver.implicitly_wait(10)
             
 driver.maximize_window()
@@ -252,7 +253,12 @@ def check_driver_open():
 def no_Window_driver():
     global driver
     print('NoSuchWindowException_stop')
-    driver = Driver(uc=True)
+    options = Options()
+            #options.headless = True
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+
+    driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(10)
     driver.maximize_window()
     driver.get("https://www.like4like.org/#social-media-platform-list")
