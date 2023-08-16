@@ -275,6 +275,7 @@ def failed_success_minutes():
             print(failed_success)
             email_to_find = email
             user_data = collection.find_one({"email": email_to_find})
+            sys.exit()
            
             current_url = driver.current_url
             if current_url=='https://www.like4like.org/earn-credits.php?feature=youtubes':
@@ -289,7 +290,7 @@ def failed_success_minutes():
                 collection.update_one(
                 {"email": email_to_find},
                 {"$set": {"limit_like": failed_success}})
-            sys.exit()
+            
         if erro_minutes == 'No tasks are currently available, please try again later...':
             print('No tasks are currently available')
             sys.exit()
@@ -462,6 +463,8 @@ def like():
     global driver
     global con_like
     driver.get("https://www.like4like.org/earn-credits.php?feature=youtube")
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
+
     con_like = 0
     for s in range(30):
         try:
@@ -469,8 +472,6 @@ def like():
             driver.maximize_window()
             driver.implicitly_wait(15)
             time.sleep(5)
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight/1);")
-            time.sleep(2)
             element_control_click = driver.find_element(By.CSS_SELECTOR, "a[class^='cursor earn_pages_button profile_view_img']").click()
             driver.switch_to.window(driver.window_handles[1])
             time.sleep(5)
@@ -497,15 +498,20 @@ def like():
                     )
         except NoSuchWindowException:
             print('like: NoSuchWindowException_stop')
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
+
             no_Window_driver()
             print('like: NoSuchWindowException_open')
         except NoSuchElementException:
             print('NoSuchElementException_like')
             driver.save_screenshot('NoSuchElement_like_{}.png'.format(s))
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
+
             like_erro()
         except Exception as s:
             print('Subscribe_erroo:   ',s)
             driver.save_screenshot('erro_like_{}.png'.format(s))
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             like_erro()
 
 
