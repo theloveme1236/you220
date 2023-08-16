@@ -326,7 +326,7 @@ def Subscribe():
     global con_sub
     driver.get("https://www.like4like.org/earn-credits.php?feature=youtubes")
     con_sub = 0
-    for s in range(60):
+    for s in range(40):
         try:
             
             driver.maximize_window()
@@ -511,4 +511,3 @@ def like():
 
 
 Subscribe()
-like()
