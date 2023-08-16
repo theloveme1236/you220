@@ -289,8 +289,10 @@ def failed_success_minutes():
                 collection.update_one(
                 {"email": email_to_find},
                 {"$set": {"limit_like": failed_success}})
+            sys.exit()
         if erro_minutes == 'No tasks are currently available, please try again later...':
             print('No tasks are currently available')
+            sys.exit()
         #driver.quit()
     except NoSuchWindowException:
         print('failed_success_minutes')
@@ -326,7 +328,7 @@ def Subscribe():
     global con_sub
     driver.get("https://www.like4like.org/earn-credits.php?feature=youtubes")
     con_sub = 0
-    for s in range(40):
+    for s in range(25):
         try:
             
             driver.maximize_window()
@@ -338,21 +340,17 @@ def Subscribe():
             #element_control_click.click()
             driver.switch_to.window(driver.window_handles[-1])
             subscribe_button = driver.find_element(By.CSS_SELECTOR, "div#subscribe-button button span.yt-core-attributed-string").text
-            print('first',subscribe_button)
             if subscribe_button== "Subscribe" or subscribe_button == "اشتراك":
-                print('subscribe_button:',subscribe_button)
                 sub_old_count = driver.find_element(By.ID, 'subscriber-count').text
-                print('sub_old_count:',sub_old_count)
                 time.sleep(2)
                 driver.find_element(By.ID, 'subscribe-button').click()
                 time.sleep(2)
                 driver.refresh()
                 time.sleep(2)
                 sub_new_count = driver.find_element(By.ID, 'subscriber-count').text
-                print('sub_new_count:',sub_new_count)
                 if sub_new_count == sub_old_count:
                     print('sub_old_count:',sub_old_count)
-                    print('يساوي')
+                    print('==')
                     print('sub_new_count:',sub_new_count)
                     driver.close()
                     driver.switch_to.window(driver.window_handles[0])
@@ -362,7 +360,7 @@ def Subscribe():
                 elif sub_old_count < sub_new_count  :
                     print('_______________________________________________________________')
                     print('sub_old_count:',sub_old_count)
-                    print('اكبر')
+                    print('<')
                     print('sub_new_count:',sub_new_count)
                     driver.close()
                     driver.switch_to.window(driver.window_handles[0])
@@ -372,7 +370,7 @@ def Subscribe():
                 elif sub_old_count > sub_new_count:
                     print('_______________________________________________________________')
                     print('sub_old_count:',sub_old_count)
-                    print('اصغر')
+                    print('>')
                     print('sub_new_count:',sub_new_count)
                     '''
                     driver.find_element(By.CSS_SELECTOR, "#items > ytd-menu-service-item-renderer:nth-child(4)").click()
@@ -465,13 +463,14 @@ def like():
     global con_like
     driver.get("https://www.like4like.org/earn-credits.php?feature=youtube")
     con_like = 0
-    for s in range(60):
+    for s in range(30):
         try:
             
             driver.maximize_window()
             driver.implicitly_wait(15)
             time.sleep(5)
-            #driver.execute_script("window.scrollTo(0, document.body.scrollHeight/1);")
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight/1);")
+            time.sleep(2)
             element_control_click = driver.find_element(By.CSS_SELECTOR, "a[class^='cursor earn_pages_button profile_view_img']").click()
             driver.switch_to.window(driver.window_handles[1])
             time.sleep(5)
@@ -511,3 +510,4 @@ def like():
 
 
 Subscribe()
+like()
