@@ -469,6 +469,7 @@ def like_erro():
             #Subscribe()
         driver.switch_to.window(driver.window_handles[0])
         driver.get("https://www.like4like.org/earn-credits.php?feature=youtube")
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
         time.sleep(10)
         like3like_login()
         check_driver_open()
@@ -501,18 +502,18 @@ def like():
             time.sleep(2)
             like_new_count = driver.find_element(By.ID, 'segmented-like-button').text
             if like_new_count == like_old_count:
-                print('sub_old_count:',like_old_count)
+                print('like_old_count:',like_old_count)
                 print('==')
-                print('sub_new_count:',like_new_count)
+                print('like_new_count:',like_new_count)
                 driver.close()
                 driver.switch_to.window(driver.window_handles[0])
                 time.sleep(5)
                 driver.find_element(By.CSS_SELECTOR, '[alt="Click On The Button To Confirm Interaction!"]').click()
             elif like_old_count < like_new_count  :
                 print('_______________________________________________________________')
-                print('sub_old_count:',like_old_count)
+                print('like_old_count:',like_old_count)
                 print('<')
-                print('sub_new_count:',like_new_count)
+                print('like_new_count:',like_new_count)
                 driver.close()
                 driver.switch_to.window(driver.window_handles[0])
                 time.sleep(5)
@@ -520,19 +521,21 @@ def like():
                     
             elif like_old_count > like_new_count:
                 print('_______________________________________________________________')
-                print('sub_old_count:',like_old_count)
+                print('like_old_count:',like_old_count)
                 print('>')
-                print('sub_new_count:',like_new_count)
+                print('like_new_count:',like_new_count)
                 driver.close()
                 driver.switch_to.window(driver.window_handles[0])
                 time.sleep(5)
                 driver.get("https://www.like4like.org/earn-credits.php?feature=youtube")
+                driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             else:
-                print('خطاء')            
+                print('errro')            
                 driver.close()
                 driver.switch_to.window(driver.window_handles[0])
                 time.sleep(5)
                 driver.get("https://www.like4like.org/earn-credits.php?feature=youtube")
+                driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             email_to_find = email
             user_data = collection.find_one({"email": email_to_find})
             
