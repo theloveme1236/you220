@@ -353,10 +353,21 @@ def Subscribe():
                     print('sub_old_count:',sub_old_count)
                     print('==')
                     print('sub_new_count:',sub_new_count)
-                    driver.close()
-                    driver.switch_to.window(driver.window_handles[0])
-                    time.sleep(random.randrange(3, 7))
-                    driver.find_element(By.CSS_SELECTOR, '[alt="Click On The Button To Confirm Interaction!"]').click()
+                    if 'K' in sub_new_count or 'ألف' in sub_new_count:
+                        result = "find"
+                        driver.close()
+                        driver.switch_to.window(driver.window_handles[0])
+                        time.sleep(5)
+                        driver.find_element(By.CSS_SELECTOR, '[alt="Click On The Button To Confirm Interaction!"]').click()
+                    else:
+                        result = "no fond"
+                        driver.close()
+                        driver.switch_to.window(driver.window_handles[0])
+                        time.sleep(5)
+                        driver.get("https://www.like4like.org/earn-credits.php?feature=youtubes")
+
+                    print(result)
+
                     
                 elif sub_old_count < sub_new_count  :
                     print('_______________________________________________________________')
@@ -365,7 +376,7 @@ def Subscribe():
                     print('sub_new_count:',sub_new_count)
                     driver.close()
                     driver.switch_to.window(driver.window_handles[0])
-                    time.sleep(random.randrange(3, 7))
+                    time.sleep(5)
                     driver.find_element(By.CSS_SELECTOR, '[alt="Click On The Button To Confirm Interaction!"]').click()
                     
                 elif sub_old_count > sub_new_count:
@@ -381,7 +392,7 @@ def Subscribe():
                     '''
                     driver.close()
                     driver.switch_to.window(driver.window_handles[0])
-                    time.sleep(random.randrange(3, 7))
+                    time.sleep(5)
                     driver.get("https://www.like4like.org/earn-credits.php?feature=youtubes")
                 else:
                     print('خطاء')
