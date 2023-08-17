@@ -420,7 +420,6 @@ def Subscribe():
                 driver.switch_to.window(driver.window_handles[0])
                 time.sleep(random.randrange(3, 7))
                 driver.get("https://www.like4like.org/earn-credits.php?feature=youtubes")
-            driver.save_screenshot('sub_{}.png'.format(s))
 
 
 
@@ -445,13 +444,11 @@ def Subscribe():
             print('sub: NoSuchWindowException_open')
         except NoSuchElementException:
             print('NoSuchElementException_sub')
-            driver.save_screenshot('NoSuchElement_sub_{}.png'.format(s))
             Subscribe_erroo()
 
                 
         except Exception as s2:
             print('Subscribe_erroo:   ',s2)
-            driver.save_screenshot('erro_sub_{}.png'.format(s))
             Subscribe_erroo()
 
 def like_erro():
@@ -558,13 +555,11 @@ def like():
             print('like: NoSuchWindowException_open')
         except NoSuchElementException:
             print('NoSuchElementException_like')
-            driver.save_screenshot('NoSuchElement_like_{}.png'.format(s))
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
 
             like_erro()
         except Exception as s:
             print('Subscribe_erroo:   ',s)
-            driver.save_screenshot('erro_like_{}.png'.format(s))
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             like_erro()
 
