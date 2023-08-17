@@ -27,6 +27,7 @@ con = 0
 errrrroo = 0
 Subscribe_erro_stop_time= 'start'
 like_erro_stop_time = 'start'
+stop_def_Subscribe = 'start'
 def cookis_like():
     global driver
     for cookie in cookies:
@@ -259,11 +260,13 @@ def failed_success_minutes():
     global Subscribe_erro_stop_time
     global like_erro_stop_time
     global driver
+    global stop_def_Subscribe
     try:
         erro_minutes=driver.find_element(By.ID, 'error-text').text
         You_have_failed  = erro_minutes.split(' success rate validation')[0]
         if You_have_failed == str('You have failed our'):
             print('You have failed our')
+            stop_def_Subscribe= 'stop'
             minutes_to_add =  erro_minutes.split('next ')[-1].split(' minutes.')[0]
             print(minutes_to_add)
             current_time = datetime.utcnow()
@@ -275,7 +278,8 @@ def failed_success_minutes():
             print(failed_success)
             email_to_find = email
             user_data = collection.find_one({"email": email_to_find})
-            sys.exit()
+            
+            
            
             current_url = driver.current_url
             if current_url=='https://www.like4like.org/earn-credits.php?feature=youtubes':
@@ -293,7 +297,7 @@ def failed_success_minutes():
             
         if erro_minutes == 'No tasks are currently available, please try again later...':
             print('No tasks are currently available')
-            sys.exit()
+            stop_def_Subscribe= 'stop'
         #driver.quit()
     except NoSuchWindowException:
         print('failed_success_minutes')
@@ -336,6 +340,9 @@ def Subscribe():
             driver.implicitly_wait(15)
             #driver.execute_script("window.scrollTo(0, document.body.scrollHeight/1);")
             time.sleep(5)
+            if stop_def_Subscribe == 'stop':
+                print('stop_def_Subscribe_stop_def_Subscribe_stop_def_Subscribe')
+                break
             driver.find_element(By.CSS_SELECTOR, "a[class^='cursor earn_pages_button profile_view_img']").click()
              
             #element_control_click.click()
@@ -485,14 +492,47 @@ def like():
             time.sleep(5)
             element_control_click = driver.find_element(By.CSS_SELECTOR, "a[class^='cursor earn_pages_button profile_view_img']").click()
             driver.switch_to.window(driver.window_handles[1])
-            time.sleep(5)
+            time.sleep(2)
+            like_old_count = driver.find_element(By.ID, 'segmented-like-button').text
+            time.sleep(2)
             driver.find_element(By.ID, 'segmented-like-button').click()
-            time.sleep(5)
-            driver.save_screenshot('like_{}.png'.format(s))
-            driver.close()
-            driver.switch_to.window(driver.window_handles[0])
-            time.sleep(5)
-            driver.find_element(By.CSS_SELECTOR, '[alt="Click On The Button To Confirm Interaction!"]').click()
+            time.sleep(2)
+            driver.refresh()
+            time.sleep(2)
+            like_new_count = driver.find_element(By.ID, 'segmented-like-button').text
+            if like_new_count == like_old_count:
+                print('sub_old_count:',like_old_count)
+                print('==')
+                print('sub_new_count:',like_new_count)
+                driver.close()
+                driver.switch_to.window(driver.window_handles[0])
+                time.sleep(5)
+                driver.find_element(By.CSS_SELECTOR, '[alt="Click On The Button To Confirm Interaction!"]').click()
+            elif like_old_count < like_new_count  :
+                print('_______________________________________________________________')
+                print('sub_old_count:',like_old_count)
+                print('<')
+                print('sub_new_count:',like_new_count)
+                driver.close()
+                driver.switch_to.window(driver.window_handles[0])
+                time.sleep(5)
+                driver.find_element(By.CSS_SELECTOR, '[alt="Click On The Button To Confirm Interaction!"]').click()
+                    
+            elif like_old_count > like_new_count:
+                print('_______________________________________________________________')
+                print('sub_old_count:',like_old_count)
+                print('>')
+                print('sub_new_count:',like_new_count)
+                driver.close()
+                driver.switch_to.window(driver.window_handles[0])
+                time.sleep(5)
+                driver.get("https://www.like4like.org/earn-credits.php?feature=youtube")
+            else:
+                print('خطاء')            
+                driver.close()
+                driver.switch_to.window(driver.window_handles[0])
+                time.sleep(5)
+                driver.get("https://www.like4like.org/earn-credits.php?feature=youtube")
             email_to_find = email
             user_data = collection.find_one({"email": email_to_find})
             
@@ -524,7 +564,6 @@ def like():
             driver.save_screenshot('erro_like_{}.png'.format(s))
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             like_erro()
-
 
 Subscribe()
 like()
